@@ -1,0 +1,45 @@
+.banner {
+    position: relative;
+}
+.banner__images img {
+    border-radius: 20px;
+}
+.banner__caption {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    padding-left: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+.banner__title {
+    font-size: 1.75em;
+    font-weight: bold;
+    line-height: 44px;
+    color: #BF1E77;
+}
+p.banner_text {
+    font-weight: 500;
+    font-size: 1.15em;
+    line-height: 25px;
+}
+.banner__item {
+    align-self: center;
+}
+
+@media (max-width: 768px){
+    .banner__images img {
+        width: 100%;
+        border-radius: 0;
+    }
+    .banner__caption {
+        width: 100%;
+        background: rgba(255 255 255 / 45%);
+        padding: 1rem;
+    }
+    .banner__title {
+        line-height: 34px;
+    }
+}

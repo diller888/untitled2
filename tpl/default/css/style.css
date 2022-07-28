@@ -1,0 +1,23 @@
+@import url("/app/plugins/css/default.css");
+@import url("/app/plugins/css/style.css");
+@import url("/app/plugins/css/normalize.css");
+@import url("/tpl/default/css/style/template.css");
+@font-face {
+    font-family: 'AvertaRegular';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("fonts/AvertaRegular.woff2") format('truetype');
+}
+:root {
+  --primary-color: #BF1E77;
+  --primary-color-hover: #7C0A48;
+  --primary-color-text: #FFFFFF;
+  --text-color: #1D1F1D;
+  --text-font: "AvertaRegular", "Arial", sans-serif;
+  --link-color: #165816;
+  --link-color-hover: #314C51;
+  --button-color: #61AD36;
+  --button-color-hover: #314C51;
+  --button-color-text: #FFFFFF;
+}
