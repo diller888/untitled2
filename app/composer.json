@@ -1,0 +1,6 @@
+{
+    "require": {
+        "thingengineer/mysqli-database-class": "dev-master",
+        "vkcom/vk-php-sdk": "^5.101"
+    }
+}

@@ -1,0 +1,21 @@
+.not-found {
+    max-width: 780px;
+    margin: auto;
+    padding: 2rem 0;
+}
+.not-found__panel {
+    padding: 1rem;
+    text-align: center;
+}
+.not-found__panel>a {
+    display: inline-block;
+    margin: 0 0.5rem;
+    background: var(--primary-color);
+    color: var(--primary-color-text);
+    padding: 0.75rem 2rem;
+    border-radius: 4px;
+    transition: .3s;
+}
+.not-found__panel>a:hover {
+    background: var(--primary-color-hover);
+}
