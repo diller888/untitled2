@@ -28,16 +28,24 @@ function navGo() {
                     method: 'GET'
                 })
                     .then((result) => {
+                        if (result.status != 200) {
+                            document.querySelector(".loader>span").innerHTML = "<span class='loader__text'>Bad Server Response</span>";
+                            throw new Error("Bad Server Response");
+                        }
                         return result.text();
                     })
                     .then((content) => {
-                        maincontent.innerHTML = content;
-                        navbar.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                        pageTitle(url + "/?infoTitle");
-                        history.pushState({nextUrl: url}, null, url);
+                        if (window.history.state.prevUrl !== url) {
+                            maincontent.innerHTML = content;
+                            navbar.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                            pageTitle(url + "/?infoTitle");
+                            history.pushState({prevUrl: url}, null, url);
+                        } else {
+                            document.querySelector(".loader").classList.remove("open");
+                        }
                     })
 
             });
@@ -52,26 +60,28 @@ window.onpopstate = function (e) {
 
     let main = document.querySelector(".content");
     e.preventDefault();
-    let url = e.state.nextUrl;
-    fetch(url, {
-        headers: {
-            'credentials': 'same-origin',
-            'X-Requested-With': 'XMLHttpRequest',
-        },
-        method: 'GET'
-    })
-        .then((result) => {
-            if (result.status != 200) {
-                throw new Error("Bad Server Response");
-            }
-            return result.text();
-        })
-        .then((content) => {
-            main.innerHTML = content;
-            pageTitle(url + "/?infoTitle");
-            history.replaceState({nextUrl: url}, null, url);
-            go();
-        })
 
+    if (window.history.state) {
+        let url = e.state.prevUrl;
+        let urlPrev = url.replace('//', '/');
+        fetch(urlPrev, {
+            headers: {
+                'credentials': 'same-origin',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            method: 'GET'
+        })
+            .then((result) => {
+                if (result.status != 200) {
+                    throw new Error("Bad Server Response");
+                }
+                return result.text();
+            })
+            .then((content) => {
+                main.innerHTML = content;
+                pageTitle(url + "/?infoTitle");
+                go();
+            })
+    }
 }
 export default navGo;

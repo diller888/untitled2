@@ -46,13 +46,13 @@ if (isset($sess->guest_id)) {
                 "address" => $dataGuestAddress
             );
             $idGuest = $db->insert('guest', $dataGuest);
-            $sess->guest_id = $guest->id;
+            $sess->guest_id = $idGuest->id;
             $sess->date_reg = $dataGuestReg;
             $sess->name = $dataGuestName;
             $sess->phone = $dataGuestPhone;
             $sess->address = $dataGuestAddress;
             $sess->email = $dataGuestEmail;
-            setcookie('guest_id', $idGuest, time()+864000000, '/');
+            setcookie('guest_id', $idGuest->id, time()+864000000, '/');
         }
     }
 } elseif (isset($_COOKIE['guest_id'])) {

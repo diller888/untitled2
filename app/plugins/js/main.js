@@ -1,6 +1,8 @@
 import go from './modules/go.js';
 import navGo from './modules/nav.js';
 
+history.pushState({prevUrl: location.pathname}, null, location.pathname);
+
 go();
 navGo();
 

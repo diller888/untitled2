@@ -26,7 +26,7 @@ if (isset($set_meta)) $set->set_meta = $set_meta;
             $loadCss = opendir(H.'tpl/' . (isset($set->tpl) ? $set->tpl : 'default') . '/css/');
             while ($filecss = readdir($loadCss))
             {
-                if (preg_match('#\.css$#i', $filecss))echo "\t\t<link rel='stylesheet' href='/tpl/default/css/" . $filecss . "?d=".(microtime(true))."' media='screen and (max-width: 2500px)'>\n";
+                if (preg_match('#\.css$#i', $filecss))echo "\t\t<link rel='stylesheet' href='/tpl/default/css/" . $filecss . "?d=".(microtime(true))."'>\n";
             }
         }
         if (isset($set->set_key)) echo "\t\t<meta name=\"keywords\" itemprop=\"keywords\" content=\"" . $set->set_key . "\" />\n";

@@ -4,13 +4,8 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd52a79619e31977b79120b41c7a332fb
+class ComposerStaticInite9bc071478b5c7a325ca65ef62384223
 {
-    public static $files = array (
-        '71ecd0286a4e74fd8732297fb587023c' => __DIR__ . '/..' . '/thingengineer/mysqli-database-class/MysqliDb.php',
-        'd383f1ec7b1e54a09cb53eb6fcf751e0' => __DIR__ . '/..' . '/thingengineer/mysqli-database-class/dbObject.php',
-    );
-
     public static $prefixLengthsPsr4 = array (
         'V' => 
         array (
@@ -32,9 +27,9 @@ class ComposerStaticInitd52a79619e31977b79120b41c7a332fb
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd52a79619e31977b79120b41c7a332fb::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd52a79619e31977b79120b41c7a332fb::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitd52a79619e31977b79120b41c7a332fb::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite9bc071478b5c7a325ca65ef62384223::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite9bc071478b5c7a325ca65ef62384223::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInite9bc071478b5c7a325ca65ef62384223::$classMap;
 
         }, null, ClassLoader::class);
     }

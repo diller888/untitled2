@@ -1,4 +1,5 @@
 <?php
+define("M", $_SERVER["DOCUMENT_ROOT"] . '/moduls/');
 require 'func/session.php';
 
 $sess = Session::getInstance();
@@ -14,7 +15,7 @@ if ($fset = @file_get_contents(H . 'app/data/config.dat')) {
 $set = (object) $set_dinamic;
 
 //Подключение к бд
-require_once H . "app/vendor/thingengineer/mysqli-database-class/MysqliDb.php";
+require_once H . "app/inc/func/thingengineer/mysqli-database-class/MysqliDb.php";
 $db = new MysqliDb($set->mysql_host, $set->mysql_user, $set->mysql_pass, $set->mysql_base);
 
 $time = time();

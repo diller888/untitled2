@@ -1,11 +1,15 @@
 <?php
 
+
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 switch ($act) {
-    
+
+    case 'exit':
+        require_once M . 'auth/exit.php';
+        break;
     case 'err':
-        $title = 'Ошибка';
-    break;
+        include_once M . 'err/title.php';
+        break;
     default;
         if (isset($_GET['act']) && strlen($_GET['act']) > 0) {
 
@@ -13,20 +17,17 @@ switch ($act) {
             $db->where("link", $_GET['act']);
             $moduls = $db->ObjectBuilder()->getOne("moduls");
 
-            if ($moduls){
+            if ($moduls) {
 
-                if (file_exists(H.'moduls/'.$moduls->link.'/title.php')){
-                    include_once H.'moduls/'.$moduls->link.'/title.php';
+                if (file_exists(M . $moduls->link . '/title.php')) {
+                    include_once M . $moduls->link . '/title.php';
                 } else {
-                    include_once H.'moduls/media/title.php';
+                    include_once M . 'err/title.php';
                 }
 
             } else {
 
-                $titles = 'Страница не существует';
-                header("HTTP/1.0 404 Not Found");
-                header("Status: 404 Not Found");
-                header("Content-type: text/html",NULL,'404');
+                include_once M . 'err/title.php';
 
             }
 
@@ -35,5 +36,4 @@ switch ($act) {
             $title = $set->title;
 
         }
-
 }

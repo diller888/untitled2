@@ -3,9 +3,11 @@
 if (isset($_GET['id'])) {
     $ID = $_GET['id'];
     if ($ID == 404) {
-        header("HTTP/1.0 404 Not Found");
-        header("Status: 404 Not Found");
-        header("Content-type: text/html", NULL, '404');
+        if ($isAjax == FALSE) {
+            header("HTTP/1.0 404 Not Found");
+            header("Status: 404 Not Found");
+            header("Content-type: text/html", NULL, '404');
+        }
         echo '<div class="not-found">';
         echo '<picture>';
         echo '<img src="/uploads/images/not_found.webp" alt="not-found">';
@@ -18,13 +20,20 @@ if (isset($_GET['id'])) {
         echo '<a href="/">На главную</a>';
         echo '</div>';
         echo '</div>';
-    } elseif ($ID == 500) {
-        echo 'Internal Server Error';
     } else {
-        header("HTTP/1.0 404 Not Found");
-        header("Status: 404 Not Found");
-        header("Content-type: text/html", NULL, '404');
-        echo '404 Not Found';
+        if ($isAjax == FALSE) {
+            header("HTTP/1.0 ".$ID." ".$title);
+            header("Status: ".$ID." ".$title);
+            header("Content-type: text/html", NULL, "$ID");
+        }
+        echo "<div class='show-error'>";
+        echo "<div class='container'>";
+        echo "<div class='show-error__content'>";
+        echo "<div class='show-error__status'>".$ID."</div>";
+        echo "<div class='show-error__text'>".$title."</div>";
+        echo "</div>";
+        echo "</div>";
+        echo "</div>";
     }
 } else {
     if ($isAjax == FALSE) {

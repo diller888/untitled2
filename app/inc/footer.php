@@ -1,5 +1,5 @@
 <?php
-echo "<div class='loader'><i class='icon-spinner-third'></i></div>\n";
+echo "<div class='loader'><i class='icon-spinner-third'></i><span></span></div>\n";
 echo "<div class='action'>\n";
 
 if (isset($_GET['cid']) && strlen($_GET['cid']) > 0) {
@@ -13,6 +13,7 @@ if (isset($_GET['cid']) && strlen($_GET['cid']) > 0) {
 } else {
     $fileName = '';
 }
+
 if (file_exists(H . 'moduls/' . (isset($_GET['act']) ? $_GET['act'] : 'main') . '/js/' . $fileName . 'main.js')) {
     echo "\t\t<script type='module' src='/moduls/" . (isset($_GET['act']) ? $_GET['act'] : 'main') . "/js/" . $fileName . "main.js?d=" . (microtime(true)) . "' defer></script>\n";
 }
