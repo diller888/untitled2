@@ -49,6 +49,10 @@ if (typeof regOn === "undefined") {
                 data.append(pair[0], pair[1]);
             }
             fetch('/moduls/reg/action/login.php', {
+                headers: {
+                    'credentials': 'same-origin',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
                 method: 'POST',
                 body: data
             })
@@ -80,6 +84,10 @@ if (typeof regOn === "undefined") {
                 data.append(pair[0], pair[1]);
             }
             fetch('/moduls/reg/action/phone.php', {
+                headers: {
+                    'credentials': 'same-origin',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
                 method: 'POST',
                 body: data
             })
@@ -110,6 +118,10 @@ if (typeof regOn === "undefined") {
                 data.append(pair[0], pair[1]);
             }
             fetch('/moduls/reg/action/email.php', {
+                headers: {
+                    'credentials': 'same-origin',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
                 method: 'POST',
                 body: data
             })
@@ -140,6 +152,10 @@ if (typeof regOn === "undefined") {
                 data.append(pair[0], pair[1]);
             }
             fetch('/moduls/reg/action/pass.php', {
+                headers: {
+                    'credentials': 'same-origin',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
                 method: 'POST',
                 body: data
             })
@@ -177,6 +193,10 @@ if (typeof regOn === "undefined") {
                 data.append(pair[0], pair[1]);
             }
             fetch('/moduls/auth/action/captcha.php', {
+                headers: {
+                    'credentials': 'same-origin',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
                 method: 'POST',
                 body: data
             })

@@ -2,7 +2,6 @@
 /**
  * Роутинг Diller Smart CMS
  */
-
 //Ajax запрос заголовков для динамической замены
 if (isset($_GET['infoTitle'])) {
     $act = isset($_GET['act']) ? trim($_GET['act']) : '';
@@ -10,16 +9,15 @@ if (isset($_GET['infoTitle'])) {
 
         case 'err':
             $array = array();
-            include_once M. 'err/title.php';
+            include_once M . 'err/title.php';
             echo json_encode(array('title' => $title, 'result' => 'success'));
             break;
         default;
 
-            if (isset($_GET['act']) && strlen($_GET['act']) > 0) {
+            if (isset($act) && strlen($act) > 0) {
 
                 //модули
-                $db->where("link", $_GET['act']);
-                $moduls = $db->ObjectBuilder()->getOne("moduls");
+                $moduls = $db->selectOne("moduls", "link", $act);
 
                 $array = array();
                 if ($moduls) {
@@ -43,11 +41,11 @@ if (isset($_GET['infoTitle'])) {
                         }
                         if (file_exists(M . $moduls->link . '/js/' . $fileName . 'main.js')) {
                             $array['result'] = 'success';
-                            $array['path'] = '/moduls/' . $moduls->link . '/js/' . $fileName . 'main.js?d='.(microtime(true));
+                            $array['path'] = '/moduls/' . $moduls->link . '/js/' . $fileName . 'main.js?d=' . (microtime(true));
                         }
                         if (user_access('owner') && file_exists(M . $moduls->link . '/js/' . $fileName . 'owner.js')) {
                             $array['result'] = 'success';
-                            $array['owner'] = '/moduls/' . $moduls->link . '/js/' . $fileName . 'owner.js?d='.(microtime(true));
+                            $array['owner'] = '/moduls/' . $moduls->link . '/js/' . $fileName . 'owner.js?d=' . (microtime(true));
                         }
 
                     } else {
@@ -64,11 +62,11 @@ if (isset($_GET['infoTitle'])) {
 
             } else {
 
-                if (file_exists(M. 'main/js/main.js')) {
+                if (file_exists(M . 'main/js/main.js')) {
                     $array['result'] = 'success';
                     $array['path'] = '/moduls/main/js/main.js';
                 }
-                if (user_access('owner') && file_exists(M. 'main/js/owner.js')) {
+                if (user_access('owner') && file_exists(M . 'main/js/owner.js')) {
                     $array['result'] = 'success';
                     $array['owner'] = '/moduls/main/js/owner.js';
                 }
@@ -98,7 +96,7 @@ if (isset($_GET['infoTitle'])) {
         case 'go':
             $locationHref = str_replace('https:/', 'https://', $_GET['id']);
             $locationHref = str_replace('http:/', 'http://', $locationHref);
-            header("Location: ".$locationHref);
+            header("Location: " . $locationHref);
             exit;
             break;
 
@@ -106,8 +104,7 @@ if (isset($_GET['infoTitle'])) {
             if (isset($_GET['act']) && strlen($_GET['act']) > 0) {
 
                 //модули
-                $db->where("link", $_GET['act']);
-                $moduls = $db->ObjectBuilder()->getOne("moduls");
+                $moduls = $db->selectOne("moduls", "link", $_GET['act']);
 
                 //если есть подключенные модули
                 if ($moduls) {
@@ -169,7 +166,7 @@ if (isset($_GET['infoTitle'])) {
 
     try {
 
-        if (file_exists(M . $mod_link)) {
+        if (isset($mod_link) && file_exists(M . $mod_link)) {
             require_once M . $mod_link;
         } elseif (file_exists(M . $_GET['act'] . '/index.php')) {
             require_once M . $_GET['act'] . '/index.php';
@@ -183,7 +180,6 @@ if (isset($_GET['infoTitle'])) {
         ini_set('display_errors', '1');
         ini_set('display_startup_errors', '1');
         error_reporting(E_ALL);
-        echo $e->getMessage(), "\n";
 
     }
 }

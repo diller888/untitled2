@@ -8,9 +8,11 @@ if (!empty($_POST['login'])) {
         if (strlen($_POST['password']) > 5) {
             $login = strip_tags($_POST['login']);
             $password = $_POST['password'];
-            $db->where("login", $login);
-            $db->where("password", $password);
-            $ank = $db->ObjectBuilder()->getOne("users");
+            $params = array(
+                "login" => $login,
+                "password" => $password
+            );
+            $ank = $db->select("users", $params);
             if ($ank->password === $password && $ank->login === $login) {
                 echo json_encode(array('result' => 'success'));
             } else {
@@ -19,18 +21,17 @@ if (!empty($_POST['login'])) {
                 } else {
                     if ($ank->password === $password && $ank->phone === $login) {
                         echo json_encode(array('result' => 'success'));
-                    } else {
+                    } else
                         echo json_encode(array('result' => 'error', 'msg' => 'Пароль не подходит'));
-                    }
+
                 }
             }
-        } else {
+        } else
             echo json_encode(array('result' => 'error', 'msg' => 'Пароль не менее 6 символов'));
-        }
-    } else {
-        echo json_encode(array('result' => 'error', 'msg' => 'Данные не поступили'));
-    }
 
-} else {
+    } else
+        echo json_encode(array('result' => 'error', 'msg' => 'Данные не поступили'));
+
+} else
     echo json_encode(array('result' => 'error', 'msg' => 'Не верный логин'));
-}
+

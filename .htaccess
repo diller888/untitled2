@@ -47,10 +47,10 @@ AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml appl
 # Перенаправление на gzip файлы
 AddEncoding gzip .gz
  <FilesMatch "\.js.gz$">
-  ForceType text/javascript 
+  ForceType text/javascript
   Header set Content-Encoding: gzip
 </FilesMatch>
- 
+
 <FilesMatch "\.js$">
   RewriteEngine On
   RewriteCond %{HTTP_USER_AGENT} !".*Safari.*"
@@ -59,12 +59,12 @@ AddEncoding gzip .gz
   RewriteRule (.*)\.js$ $1\.js.gz [L]
   ForceType text/javascript
 </FilesMatch>
- 
+
 <FilesMatch "\.css.gz$">
   ForceType text/css
   Header set Content-Encoding: gzip
 </FilesMatch>
- 
+
 <FilesMatch "\.css$">
   RewriteEngine On
   RewriteCond %{HTTP_USER_AGENT} !".*Safari.*"

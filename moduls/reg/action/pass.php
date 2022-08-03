@@ -5,9 +5,8 @@ if (!empty($_POST['password'])) {
         echo json_encode(array('result' => 'error', 'msg' => 'Пароль не более 32 символов'));
     } elseif (strlen($_POST['password']) > 5) {
         echo json_encode(array('result' => 'success'));
-    } else {
+    } else
         echo json_encode(array('result' => 'error', 'msg' => 'Пароль не менее 6 символов'));
-    }
-} else {
+
+} else
     echo json_encode(array('result' => 'error', 'msg' => 'Данные не поступили'));
-}

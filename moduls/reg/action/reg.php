@@ -15,8 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (preg_match("#(^\ )|(\ $)#ui", $_POST['login'])) $err = 'Запрещено использовать пробел в начале и конце ника';
         if (strlen($_POST['login']) < 4) $err = 'Короткий логин';
         if (strlen($_POST['login']) > 64) $err = 'Длина логина превышает 64 символа';
-        $db->where("login", $_POST['login']);
-        $ank = $db->getOne("users");
+        $ank = $db->selectOne("users", "login", $_POST['login']);
         $login = $_POST['login'];
         if ($ank['login'] === $login) $err = 'Логин занят';
         array_push($dataUser, 'login', $login);
@@ -35,29 +34,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($_POST['email'])) {
         if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
             if (strlen($_POST['email']) > 8) {
-                $db->where("email", $_POST['email']);
-                $ankEmail = $db->ObjectBuilder()->get("users");
+                $ankEmail = $db->selectOne("users", "email", $_POST['email']);
                 if ($ankEmail->email === $_POST['email']) {
                     $err = 'email уже зарегистрирован';
-                } else {
+                } else
                     array_push($dataUser, 'email', $_POST['email']);
-                }
             } else $err = 'Заполните поле email';
-        } else {
-            $err = 'Не валидный email';
-        }
+        } else $err = 'Не валидный email';
     } else $err = 'Не указан email';
 
     if (!empty($_POST['phone'])) {
         $phones = preg_replace("/[^,.0-9]/", '', $_POST['phone']);
         if (strlen($phones) > 10) {
-            $db->where("phone", $phones);
-            $ankphone = $db->ObjectBuilder()->get("users");
+            $ankphone = $db->selectOne("users", "phone", $phones);
             if ($ankphone->phone === $phones) {
                 $err = 'Номер телефона уже зарегистрирован';
-            } else {
+            } else
                 array_push($dataUser, 'phone', $phones);
-            }
         } else $err = 'Укажите номер телефона';
     } else $err = 'Не указан телефон';
 
@@ -66,7 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (strlen($chislo) != 5) $err = 'Не указано проверочное число';
         if ($chislo != $sess->captcha) $err = 'Не верно указано проверочное число';
     } else $err = 'Вы не ввели проверочное число';
-    print_r($dataUser);
     //Если нет ошибок
     /**
      * if (!isset($err)) {

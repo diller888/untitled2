@@ -2,11 +2,9 @@
 require 'func/class.user.php';
 
 if (isset($sess->user_id)) {
-    $db->where("id", $sess->user_id);
-    $user = $db->ObjectBuilder()->getOne("users");
+    $user = $db->selectOne("users", "id", $sess->user_id);
 } elseif (isset($_COOKIE['id_user'])) {
-    $db->where("id", $_COOKIE['id_user']);
-    $user = $db->ObjectBuilder()->getOne("users");
+    $user = $db->selectOne("users", "id", $_COOKIE['id_user']);
     $sess->user_id = $user->id;
 }
 
@@ -14,8 +12,7 @@ if (isset($sess->user_id)) {
  * Определение гостя
  */
 if (isset($sess->guest_id)) {
-    $db->where("id", $sess->guest_id);
-    $guest = $db->ObjectBuilder()->getOne("guest");
+    $guest = selectOne("guest", "id", $sess->guest_id);
     if (!$guest) {
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
             $userAgent = $_SERVER['HTTP_USER_AGENT'];
@@ -46,6 +43,7 @@ if (isset($sess->guest_id)) {
                 "address" => $dataGuestAddress
             );
             $idGuest = $db->insert('guest', $dataGuest);
+            $guest = $db->selectOne("guest", "id", $idGuest);
             $sess->guest_id = $idGuest->id;
             $sess->date_reg = $dataGuestReg;
             $sess->name = $dataGuestName;
@@ -56,8 +54,7 @@ if (isset($sess->guest_id)) {
         }
     }
 } elseif (isset($_COOKIE['guest_id'])) {
-    $db->where("id", $_COOKIE['guest_id']);
-    $guest = $db->ObjectBuilder()->getOne("guest");
+    $guest = $db->selectOne("guest", "id", $_COOKIE['guest_id']);
     if (!$guest) {
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
             $userAgent = $_SERVER['HTTP_USER_AGENT'];
@@ -88,8 +85,7 @@ if (isset($sess->guest_id)) {
                 "address" => $dataGuestAddress
             );
             $idGuest = $db->insert('guest', $dataGuest);
-            $db->where("id", $idGuest);
-            $guest = $db->ObjectBuilder()->getOne("guest");
+            $guest = $db->selectOne("guest", "id", $idGuest);
             $sess->guest_id = $guest->id;
             $sess->date_reg = $dataGuestReg;
             $sess->name = $dataGuestName;
@@ -118,12 +114,12 @@ if (isset($sess->guest_id)) {
             "os" => $OS
         );
         $idGuest = $db->insert('guest', $dataGuest);
+        $guest = $db->selectOne("guest", "id", $idGuest);
         $sess->guest_id = $idGuest;
         setcookie('guest_id', $idGuest, time()+864000000, '/');
 
     }
 }
-
 
 /**
  * Обновление пользователя
@@ -133,8 +129,7 @@ if (isset($user)) {
     $dataUser = array(
         "date_last" => $time,
     );
-    $db->where('id', $user->id);
-    $db->update('users', $dataUser);
+    $db->update('users', $dataUser, $user->id);
 }
 
 /**
@@ -145,8 +140,7 @@ if (isset($guest)) {
     $dataGuest = array(
         "date_last" => $time,
     );
-    $db->where('id', $guest->id);
-    $db->update('guest', $dataGuest);
+    $db->update('guest', $dataGuest, $guest->id);
 } else {
     $guest_data[] = '';
     $guest_data['id'] = 0;
@@ -158,12 +152,10 @@ if (isset($guest)) {
     $guest_data = (object)$guest_data;
 }
 
-$db->where("date_last < " . (time() - 86400));
-$db->where("id_user", "0");
-$guestQuery = $db->get('guest', 100);
-if ($db->count > 0) {
-    foreach ($guestQuery as $guestRow) {
-        $db->where('id', $guestRow['id']);
-        $db->delete('guest');
+$params = "`date_last` < " . (time() - 86400) . " AND `id_user` = '0'";
+$guestQuery = $db->dbquery('guest', $params, 100);
+if ($guestQuery) {
+    while ($guestRow = mysqli_fetch_array($guestQuery)){
+        $db->delete('guest', $guestRow['id']);
     }
 }

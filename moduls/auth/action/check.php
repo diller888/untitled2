@@ -6,8 +6,7 @@ require_once CORE . 'core.php';
 if (!empty($_POST['login'])) {
     if (strlen($_POST['login']) > 3) {
         $login = strip_tags($_POST['login']);
-        $db->where("login", $login);
-        $ank = $db->ObjectBuilder()->getOne("users");
+        $ank = $db->selectOne("users","login", $login);
         if ($ank->login === $login) {
             echo json_encode(array('result' => 'success'));
         } else {

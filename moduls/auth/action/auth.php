@@ -28,8 +28,7 @@ if (!empty($_POST['chislo'])) {
 }
 
 if (!isset($err)) {
-    $db->where("login", $login);
-    $ank = $db->ObjectBuilder()->getOne("users");
+    $ank = $db->selctOne("users","login", $login);
     if ($ank->login === $login && $ank->password === $password) {
         $sess->user_id = $ank->id;
         setcookie('user_id', $ank->id, time() + 864000000, '/');

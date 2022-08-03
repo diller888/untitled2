@@ -5,7 +5,7 @@
         </div>
         <div class="auth__form">
             <a href="/" class="auth__home link"><i class="icon-left"></i> На главную</a>
-            <form class="form form-auth" method="post" action="/moduls/reg/action/reg.php">
+            <form class="form form-auth" method="post" action="/moduls/reg/action/login.php">
                 <h1 class="auth__title">Регистрация</h1>
                 <div class="auth__form-group">
                     <label>Логин</label>

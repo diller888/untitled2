@@ -1,6 +1,5 @@
 <?php
 
-
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 switch ($act) {
 
@@ -14,8 +13,7 @@ switch ($act) {
         if (isset($_GET['act']) && strlen($_GET['act']) > 0) {
 
             //модули
-            $db->where("link", $_GET['act']);
-            $moduls = $db->ObjectBuilder()->getOne("moduls");
+            $moduls = $db->selectOne("moduls", "link", $_GET['act']);
 
             if ($moduls) {
 

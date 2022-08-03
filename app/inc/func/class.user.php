@@ -3,8 +3,7 @@
 	{
 		global $db;
 		$ID = (int)$ID; //Определяем ID
-		$db->where ("id", $ID);
-		$user = $db->ObjectBuilder()->getOne("users");
+        $user = $db->selectOne("users", "id", $ID);
 		return $user;
 	}
 ?>

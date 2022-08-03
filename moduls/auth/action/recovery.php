@@ -25,8 +25,7 @@ if (!empty($_POST['chislo'])) {
 if (!isset($err)) {
 
     $email = '';
-    $db->where("login", $login);
-    $ank = $db->ObjectBuilder()->getOne("users");
+    $ank = $db->selectOne("users", "login", $login);
     if ($ank->login === $login) {
         $email = $ank->email;
     } else {
@@ -63,7 +62,7 @@ if (!isset($err)) {
             $mail->isHTML(true);
             $mail->Subject = 'Восстановление пароля';
             $mail->Body = '<h3>Восстановление пароля</h3>
-<p>Уважаемый(ая), '.$ank->name.'. Вы сделали запрос забытого пароля на сайте <a href="https://'.$_SERVER['SERVER_NAME'].'">'.$set->company.'</a></p>
+<p>Уважаемый(ая), ' . $ank->name . '. Вы сделали запрос забытого пароля на сайте <a href="https://' . $_SERVER['SERVER_NAME'] . '">' . $set->company . '</a></p>
 <div style="width: 100%;box-sizing:border-box;font-weight: bold;padding:2em;botder-radius:4px;background: #F7F7F7;text-align: center">Ваш пароль: ' . $ank->password . '</div>
 <p>Если вы не делали запроса на восстановление пароля, то просто удалите это сообщение. Ваш пароль хранится в надежном месте.</p>';
             if ($mail->send()) {
@@ -74,15 +73,15 @@ if (!isset($err)) {
                 $info_name = $rest . '' . str_repeat("*", $c_name);
                 $msg = 'Пароль был отправлен на почту ' . $info_name . '@' . $ims[1];
                 echo json_encode(array('result' => 'success', 'msg' => $msg));
-            } else {
+            } else
                 echo json_encode(array('result' => 'error', 'msg' => 'Почта не была отправлена'));
-            }
+
         } catch (Exception $e) {
             echo json_encode(array('result' => 'error', 'msg' => 'Message could not be sent'));
         }
-    } else {
+
+    } else
         echo json_encode(array('result' => 'error', 'msg' => 'Email не найден'));
-    }
-} else {
+
+} else
     echo json_encode(array('result' => 'error', 'msg' => $err));
-}

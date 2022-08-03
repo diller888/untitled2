@@ -1,7 +1,6 @@
 <?php
 define("H", $_SERVER["DOCUMENT_ROOT"] . '/');
-define("CORE", $_SERVER["DOCUMENT_ROOT"] . '/app/inc/');
-require_once CORE . 'core.php';
+require_once H . 'app/inc/core.php';
 
 if (!empty($_POST['chislo'])) {
     if (strlen($_POST['chislo']) == 5) {
@@ -11,10 +10,9 @@ if (!empty($_POST['chislo'])) {
         } else {
             echo json_encode(array('result' => 'error', 'msg' => 'Не верное число'));
         }
-    } else {
+    } else
         echo json_encode(array('result' => 'error', 'msg' => 'Число меньше 5 символов'));
-    }
 
-} else {
+} else
     echo json_encode(array('result' => 'error', 'msg' => 'Данные не поступили'));
-}
+
