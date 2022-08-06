@@ -17,7 +17,9 @@ switch ($act) {
 
             if ($moduls) {
 
-                if (file_exists(M . $moduls->link . '/title.php')) {
+                if (file_exists(TPL . $moduls->link . '/title.php')) {
+                    include_once TPL . $moduls->link . '/title.php';
+                } elseif (file_exists(M . $moduls->link . '/title.php')) {
                     include_once M . $moduls->link . '/title.php';
                 } else {
                     include_once M . 'err/title.php';

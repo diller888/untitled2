@@ -53,7 +53,6 @@
                     <div class="auth__row-col">
                         <div class="auth__form-button">
                             <button type="submit" class="auth__form-submit" disabled>Регистрация</button>
-                            <input type="submit" value="send">
                         </div>
                     </div>
                     <div class="auth__row-col">

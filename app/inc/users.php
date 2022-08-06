@@ -11,8 +11,9 @@ if (isset($sess->user_id)) {
 /**
  * Определение гостя
  */
+
 if (isset($sess->guest_id)) {
-    $guest = selectOne("guest", "id", $sess->guest_id);
+    $guest = $db->selectOne("guest", "id", $sess->guest_id);
     if (!$guest) {
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
             $userAgent = $_SERVER['HTTP_USER_AGENT'];

@@ -1,0 +1,10 @@
+
+.header {
+    background: #f9f9f9;
+    border-radius: 16px;
+    padding: 1rem 2rem;
+}
+ul.page__list {
+    list-style: none;
+    line-height: 32px;
+}

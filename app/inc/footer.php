@@ -14,8 +14,12 @@ if (isset($_GET['cid']) && strlen($_GET['cid']) > 0) {
     $fileName = '';
 }
 
-if (file_exists(H . 'moduls/' . (isset($_GET['act']) ? $_GET['act'] : 'main') . '/js/' . $fileName . 'main.js')) {
-    echo "\t\t<script type='module' src='/moduls/" . (isset($_GET['act']) ? $_GET['act'] : 'main') . "/js/" . $fileName . "main.js?d=" . (microtime(true)) . "' defer></script>\n";
+if (file_exists(TPL . (isset($_GET['act']) ? $_GET['act'] : 'main') . '/js/' . $fileName . 'main.js')) {
+    echo "		<script type='module' src='" . PATH . (isset($_GET['act']) ? $_GET['act'] : 'main') . "/js/" . $fileName . "main.js?d=" . (microtime(true)) . "' defer></script>
+";
+} elseif (file_exists(M . (isset($_GET['act']) ? $_GET['act'] : 'main') . '/js/' . $fileName . 'main.js')) {
+    echo "		<script type='module' src='/moduls/" . (isset($_GET['act']) ? $_GET['act'] : 'main') . "/js/" . $fileName . "main.js?d=" . (microtime(true)) . "' defer></script>
+";
 }
 echo "</div>\n";
 if (file_exists(H . 'app/plugins/js/main.js')) {

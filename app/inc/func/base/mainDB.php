@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Класс для работы с базой данных Diller Smart CMS
+ * Автор Ильдар Русланович
+ */
+
 class mainDB
 {
 
@@ -70,7 +75,7 @@ class mainDB
             return false;
     }
 
-    public function selectRow($table, $params)
+    public function selectRow($table, $params, $limit = 1, $order = '', $sort = '')
     {
         if ($table) {
             if ($params) {
@@ -80,8 +85,16 @@ class mainDB
                     $num++;
                     $where .= ($num != 1 ? " AND" : " WHERE") . " `" . $key . "` = '" . $value . "'";
                 }
-                $query = "SELECT * FROM `" . $table . "` " . $where;
-                $result = $this->mysqli->query($query);
+                if ($limit) {
+                    if ($order) {
+                        $query = "SELECT * FROM `" . $table . "` " . $where . " ORDER BY `" . $order . "` " . $sort . " LIMIT " . $limit;
+                    } else {
+                        $query = "SELECT * FROM `" . $table . "` " . $where . " LIMIT " . $limit;
+                    }
+                } else {
+                    $query = "SELECT * FROM `" . $table . "` " . $where;
+                }
+                $result = mysqli_fetch_array($this->mysqli->query($query));
                 if (!$result) return false;
                 return (object)$result;
             } else
@@ -106,7 +119,7 @@ class mainDB
                 $query = "INSERT INTO `" . $table . "` (" . $key . ") VALUES (" . $value . ")";
                 $result = $this->mysqli->query($query);
                 if (!$result) return false;
-                $ID = mysqli_insert_id($result);
+                $ID = mysqli_insert_id($this->mysqli);
                 return $ID;
             } else
                 return false;

@@ -55,7 +55,7 @@
                     <a href="/" class="navbar__panel-link link link--border">
                         <i class="icon-heart"></i>
                     </a>
-                    <a href="<?= (isset($user) ? '/id'.$user['id'] : '/auth')?>" class="navbar__panel-link link">
+                    <a href="<?= (isset($user) ? '/id'.$user->id : '/auth')?>" class="navbar__panel-link link">
                         <i class="icon-user"></i>
                     </a>
                     <a href="/" class="navbar__cart link">
