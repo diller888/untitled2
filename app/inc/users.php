@@ -1,19 +1,19 @@
 <?php
 require 'func/class.user.php';
 
-if (isset($sess->user_id)) {
-    $user = $db->selectOne("users", "id", $sess->user_id);
+if (isset($_SESSION['user_id'])) {
+    $user = $db->selectOne("users", "id", $_SESSION['user_id']);
 } elseif (isset($_COOKIE['id_user'])) {
     $user = $db->selectOne("users", "id", $_COOKIE['id_user']);
-    $sess->user_id = $user->id;
+    $_SESSION['user_id'] = $user->id;
 }
 
 /**
  * Определение гостя
  */
 
-if (isset($sess->guest_id)) {
-    $guest = $db->selectOne("guest", "id", $sess->guest_id);
+if (isset($_SESSION['id_guest'])) {
+    $guest = $db->selectOne("guest", "id", $_SESSION['id_guest']);
     if (!$guest) {
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
             $userAgent = $_SERVER['HTTP_USER_AGENT'];
@@ -23,16 +23,16 @@ if (isset($sess->guest_id)) {
             $OS = $browser->getPlatform();
             if (isset($_SERVER["HTTP_REFERER"])) {
                 $refer = $_SERVER["HTTP_REFERER"];
-                $sess->refer = $refer;
+                $_SESSION['refer'] = $refer;
             } else echo $refer = '';
 
-            $dataGuestReg = isset($sess->date_reg) ? $sess->date_reg : $time;
-            $dataGuestName = isset($sess->name) ? $sess->name : '';
-            $dataGuestPhone = isset($sess->phone) ? $sess->phone : '';
-            $dataGuestAddress = isset($sess->address) ? $sess->address : '';
-            $dataGuestEmail = isset($sess->email) ? $sess->email : '';
+            $dataGuestReg = isset($_SESSION['date_reg']) ? $_SESSION['date_reg'] : $time;
+            $dataGuestName = isset($_SESSION['name']) ? $_SESSION['name'] : '';
+            $dataGuestPhone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '';
+            $dataGuestAddress = isset($_SESSION['address']) ? $_SESSION['address'] : '';
+            $dataGuestEmail = isset($_SESSION['email']) ? $_SESSION['email'] : '';
             $dataGuest = array(
-                "id" => $sess->guest_id,
+                "id" => $_SESSION['id_guest'],
                 "name" => $dataGuestName,
                 "email" => $dataGuestEmail,
                 "phone" => $dataGuestPhone,
@@ -45,12 +45,12 @@ if (isset($sess->guest_id)) {
             );
             $idGuest = $db->insert('guest', $dataGuest);
             $guest = $db->selectOne("guest", "id", $idGuest);
-            $sess->guest_id = $idGuest->id;
-            $sess->date_reg = $dataGuestReg;
-            $sess->name = $dataGuestName;
-            $sess->phone = $dataGuestPhone;
-            $sess->address = $dataGuestAddress;
-            $sess->email = $dataGuestEmail;
+            $_SESSION['id_guest'] = $idGuest->id;
+            $_SESSION['date_reg'] = $dataGuestReg;
+            $_SESSION['name'] = $dataGuestName;
+            $_SESSION['phone'] = $dataGuestPhone;
+            $_SESSION['address'] = $dataGuestAddress;
+            $_SESSION['email'] = $dataGuestEmail;
             setcookie('guest_id', $idGuest->id, time()+864000000, '/');
         }
     }
@@ -65,16 +65,16 @@ if (isset($sess->guest_id)) {
             $OS = $browser->getPlatform();
             if (isset($_SERVER["HTTP_REFERER"])) {
                 $refer = $_SERVER["HTTP_REFERER"];
-                $sess->refer = $refer;
+                $_SESSION['refer'] = $refer;
             } else echo $refer = '';
 
-            $dataGuestReg = isset($sess->date_reg) ? $sess->date_reg : $time;
-            $dataGuestName = isset($sess->name) ? $sess->name : '';
-            $dataGuestPhone = isset($sess->phone) ? $sess->phone : '';
-            $dataGuestAddress = isset($sess->address) ? $sess->address : '';
-            $dataGuestEmail = isset($sess->email) ? $sess->email : '';
+            $dataGuestReg = isset($_SESSION['date_reg']) ? $_SESSION['date_reg'] : $time;
+            $dataGuestName = isset($_SESSION['name']) ? $_SESSION['name'] : '';
+            $dataGuestPhone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '';
+            $dataGuestAddress = isset($_SESSION['address']) ? $_SESSION['address'] : '';
+            $dataGuestEmail = isset($_SESSION['email']) ? $_SESSION['email'] : '';
             $dataGuest = array(
-                "id" => $sess->guest_id,
+                "id" => $_SESSION['id_guest'],
                 "name" => $dataGuestName,
                 "email" => $dataGuestEmail,
                 "phone" => $dataGuestPhone,
@@ -87,12 +87,12 @@ if (isset($sess->guest_id)) {
             );
             $idGuest = $db->insert('guest', $dataGuest);
             $guest = $db->selectOne("guest", "id", $idGuest);
-            $sess->guest_id = $guest->id;
-            $sess->date_reg = $dataGuestReg;
-            $sess->name = $dataGuestName;
-            $sess->phone = $dataGuestPhone;
-            $sess->address = $dataGuestAddress;
-            $sess->email = $dataGuestEmail;
+            $_SESSION['id_guest'] = $guest->id;
+            $_SESSION['date_reg'] = $dataGuestReg;
+            $_SESSION['name'] = $dataGuestName;
+            $_SESSION['phone'] = $dataGuestPhone;
+            $_SESSION['address'] = $dataGuestAddress;
+            $_SESSION['email'] = $dataGuestEmail;
             setcookie('guest_id', $idGuest, time()+864000000, '/');
         }
     }
@@ -105,7 +105,7 @@ if (isset($sess->guest_id)) {
         $OS = $browser->getPlatform();
         if (isset($_SERVER["HTTP_REFERER"])) {
             $refer = $_SERVER["HTTP_REFERER"];
-            $sess->refer = $refer;
+            $_SESSION['refer'] = $refer;
         } else echo $refer = '';
         $dataGuest = array(
             "date_reg" => $time,
@@ -116,7 +116,7 @@ if (isset($sess->guest_id)) {
         );
         $idGuest = $db->insert('guest', $dataGuest);
         $guest = $db->selectOne("guest", "id", $idGuest);
-        $sess->guest_id = $idGuest;
+        $_SESSION['id_guest'] = $idGuest;
         setcookie('guest_id', $idGuest, time()+864000000, '/');
 
     }

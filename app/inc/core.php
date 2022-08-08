@@ -1,15 +1,7 @@
 <?php
-define("M", $_SERVER["DOCUMENT_ROOT"] . '/moduls/');
-if (file_exists(H . 'tpl/' . (isset($set->tpl) ? $set->tpl : 'default') . '/them.name')) {
-    define("TPL", $_SERVER["DOCUMENT_ROOT"] . '/tpl/' . (isset($set->tpl) ? $set->tpl : 'default').'/moduls/');
-    define("PATH", "/tpl/" . (isset($set->tpl) ? $set->tpl : 'default')."/moduls/");
-} else {
-    define("TPL", $_SERVER["DOCUMENT_ROOT"] . '/moduls/');
-    define("PATH", "/moduls/");
-}
 require 'func/session.php';
 
-$sess = Session::getInstance();
+define("M", $_SERVER["DOCUMENT_ROOT"] . '/moduls/');
 
 //Конфигурация сайта
 $set_dinamic = array();
@@ -24,6 +16,15 @@ $set = (object) $set_dinamic;
 //Подключение к бд
 require_once H . 'app/inc/func/base/mainDB.php';
 $db = new mainDB($set->mysql_host, $set->mysql_user, $set->mysql_pass, $set->mysql_base);
+
+
+if (file_exists(H . 'tpl/' . (isset($set->tpl) ? $set->tpl : 'default') . '/them.name')) {
+    define("TPL", $_SERVER["DOCUMENT_ROOT"] . '/tpl/' . (isset($set->tpl) ? $set->tpl : 'default').'/moduls/');
+    define("PATH", "/tpl/" . (isset($set->tpl) ? $set->tpl : 'default')."/moduls/");
+} else {
+    define("TPL", $_SERVER["DOCUMENT_ROOT"] . '/moduls/');
+    define("PATH", "/moduls/");
+}
 
 $time = time();
 

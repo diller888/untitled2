@@ -28,6 +28,11 @@ p.banner_text {
 .banner__item {
     align-self: center;
 }
+h1 {
+    margin: 0;
+    padding: 1em;
+    font-size: 1.7em;
+}
 
 @media (max-width: 768px){
     .banner__images img {

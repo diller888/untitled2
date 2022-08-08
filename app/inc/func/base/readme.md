@@ -19,8 +19,8 @@ $params = array(
     'login' => 'diller',
     'id'    => 1
 );
-$query = $db->select('product', $params);
-echo $query->login;
+$ank = $db->select('users', $params);
+echo $ank->login;
 ```
 ### Одиночный запрос в таблицу
 #### selectOne()

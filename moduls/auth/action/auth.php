@@ -22,7 +22,7 @@ if (!empty($_POST['password'])) {
 if (!empty($_POST['chislo'])) {
     $chislo = intval($_POST['chislo']);
     if (strlen($chislo) != 5) $err = 'Не указано проверочное число';
-    if ($chislo != $sess->captcha) $err = 'Не верно указано проверочное число';
+    if ($chislo != $_SESSION['captcha']) $err = 'Не верно указано проверочное число';
 } else {
     $err = 'Вы не ввели проверочное число';
 }
@@ -30,17 +30,17 @@ if (!empty($_POST['chislo'])) {
 if (!isset($err)) {
     $ank = $db->selectOne("users","login", $login);
     if ($ank->login === $login && $ank->password === $password) {
-        $sess->user_id = $ank->id;
+        $_SESSION['user_id'] = $ank->id;
         setcookie('user_id', $ank->id, time() + 864000000, '/');
         echo json_encode(array('result' => 'success'));
     } else {
         if ($ank->email === $login && $ank->password === $password) {
-            $sess->user_id = $ank->id;
+            $_SESSION['user_id'] = $ank->id;
             setcookie('user_id', $ank->id, time() + 864000000, '/');
             echo json_encode(array('result' => 'success'));
         } else {
             if ($ank->phone === $login && $ank->password === $password) {
-                $sess->user_id = $ank->id;
+                $_SESSION['user_id'] = $ank->id;
                 setcookie('user_id', $ank->id, time() + 864000000, '/');
                 echo json_encode(array('result' => 'success'));
             } else {

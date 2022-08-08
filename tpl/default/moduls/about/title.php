@@ -1,3 +1,4 @@
 <?php
 
-$title = 'Информация о компании 2';
+$moduls = $db->selectOne("moduls", "link", $_GET['act']);
+$title = (!empty($moduls->title) ? $moduls->title : $moduls->name);

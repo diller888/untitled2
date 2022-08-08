@@ -32,8 +32,8 @@ RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^.*$ - [NC,L]
 
 RewriteRule ^id([0-9,A-z]*)                                                       index.php?act=profile&id=$1 [L,QSA]
-RewriteRule ^([0-9,A-z,_-]*)/([0-9,A-z]*)/([0-9,A-z]*)/([0-9,A-z]*)/([0-9,A-z]*)  index.php?act=$1&id=$2&=list$3&item=$4&sid=$5 [L,QSA]
-RewriteRule ^([0-9,A-z,_-]*)/([0-9,A-z]*)/([0-9,A-z]*)/([0-9,A-z]*)               index.php?act=$1&id=$2&=list$3&item=$4 [L,QSA]
+RewriteRule ^([0-9,A-z,_-]*)/([0-9,A-z]*)/([0-9,A-z]*)/([0-9,A-z]*)/([0-9,A-z]*)  index.php?act=$1&id=$2&list=$3&item=$4&sid=$5 [L,QSA]
+RewriteRule ^([0-9,A-z,_-]*)/([0-9,A-z]*)/([0-9,A-z]*)/([0-9,A-z]*)               index.php?act=$1&id=$2&list=$3&item=$4 [L,QSA]
 RewriteRule ^([0-9,A-z,_-]*)/([0-9,A-z]*)/([0-9,A-z]*)                            index.php?act=$1&id=$2&list=$3 [L,QSA]
 RewriteRule ^([0-9,A-z,_-]*)/([0-9,A-z]*)                                         index.php?act=$1&id=$2 [L,QSA]
 RewriteRule \.(php|htm|swf|fla|xml|ico|jpg|gif|png|webp|js|css|map|html|ttf)$ - [L]

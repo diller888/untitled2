@@ -2,8 +2,6 @@
 define("H", $_SERVER["DOCUMENT_ROOT"] . '/');
 
 require 'session.php';
-$sess = Session::getInstance();
-
 
 function MultiWave($img)
 {
@@ -69,13 +67,13 @@ function MultiWave($img)
     return $img2;
 }
 
-$sess->captcha = rand(10000,99999);
+$_SESSION['captcha'] = rand(10000,99999);
 
 $img=imagecreatetruecolor(167, 50);
 
 imagefill($img, 0, 0, imagecolorallocate ($img, 255, 255, 255));
 
-imagettftext ($img, 16, 0, 30, 30, imagecolorallocate ($img, 0, 0, 0), H . 'app/plugins/css/fonts/AvertaRegular.ttf', "$sess->captcha");
+imagettftext ($img, 16, 0, 30, 30, imagecolorallocate ($img, 0, 0, 0), H . 'app/plugins/css/fonts/AvertaRegular.ttf', $_SESSION['captcha']);
 header("Content-type: image/jpeg");
 
 $img=MultiWave($img);

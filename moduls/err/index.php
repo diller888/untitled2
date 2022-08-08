@@ -26,14 +26,18 @@ if (isset($_GET['id'])) {
             header("Status: ".$ID." ".$title);
             header("Content-type: text/html", NULL, "$ID");
         }
-        echo "<div class='show-error'>";
-        echo "<div class='container'>";
-        echo "<div class='show-error__content'>";
-        echo "<div class='show-error__status'>".$ID."</div>";
-        echo "<div class='show-error__text'>".$title."</div>";
-        echo "</div>";
-        echo "</div>";
-        echo "</div>";
+        echo '<div class="not-found">';
+        echo '<picture>';
+        echo '<img src="/uploads/images/not_found.webp" alt="not-found">';
+        echo '</picture>';
+        echo '<div class="not-found__panel">';
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            $previous = $_SERVER['HTTP_REFERER'];
+            echo '<a href="' . $previous . '">Назад</a>';
+        }
+        echo '<a href="/">На главную</a>';
+        echo '</div>';
+        echo '</div>';
     }
 } else {
     if ($isAjax == FALSE) {

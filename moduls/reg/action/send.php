@@ -27,7 +27,7 @@ try {
     $mail->Subject = 'Успешная регистрация';
     $mail->Body = '<h3>Успешная регистрация</h3>
 <p>Вы успешно зарегистрировались на сайте <a href="https://'.$_SERVER['SERVER_NAME'].'">'.$set->company.'</a></p>
-<div style="width: 100%;box-sizing:border-box;font-weight: bold;padding:2em;botder-radius:4px;background: #F7F7F7;text-align: center">Ваш логин: ' . $userData['login'] . '<br />Ваш пароль: ' . $userData['password'] . '</div>
+<div style="width: 100%;box-sizing:border-box;font-weight: bold;padding:2em;botder-radius:4px;background: #F7F7F7;text-align: center">Ваш логин: ' . $login . '<br />Ваш пароль: ' . $password . '</div>
 <p>Желаем вам успехов</p>';
     $mail->send();
 } catch (Exception $e) {

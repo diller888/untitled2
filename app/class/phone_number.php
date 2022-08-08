@@ -31,7 +31,7 @@ class phone_number
             $r2 = $string[8];
             $r3 = $string[9];
             $r4 = $string[10];
-            $str = '+7 (' . $p2 . '' . $p3 . '' . $p4 . ') ' . $pp . '' . $pp2 . '' . $pp3 . ' ' . $r . '' . $r2 . '-' . $r3 . '' . $r4;
+            $str = '+7 (' . $p2 . '' . $p3 . '' . $p4 . ') ' . $pp . '' . $pp2 . '' . $pp3 . ' ' . $r . '' . $r2 . ' ' . $r3 . '' . $r4;
         } elseif ($n == 7) {
             $p2 = $string[1];
             $p3 = $string[2];
@@ -43,7 +43,7 @@ class phone_number
             $r2 = $string[8];
             $r3 = $string[9];
             $r4 = $string[10];
-            $str = '+7 (' . $p2 . '' . $p3 . '' . $p4 . ') ' . $pp . '' . $pp2 . '' . $pp3 . ' ' . $r . '' . $r2 . '-' . $r3 . '' . $r4;
+            $str = '+7 (' . $p2 . '' . $p3 . '' . $p4 . ') ' . $pp . '' . $pp2 . '' . $pp3 . ' ' . $r . '' . $r2 . ' ' . $r3 . '' . $r4;
         } else {
             $p2 = $string[1];
             $p3 = $string[2];
@@ -55,7 +55,7 @@ class phone_number
             $r2 = $string[8];
             $r3 = $string[9];
             if (isset($r4)) {
-                $str = '+7 (' . $p2 . '' . $p3 . '' . $p4 . ') ' . $pp . '' . $pp2 . '' . $pp3 . ' ' . $r . '' . $r2 . '-' . $r3 . '' . $r4;
+                $str = '+7 (' . $p2 . '' . $p3 . '' . $p4 . ') ' . $pp . '' . $pp2 . '' . $pp3 . ' ' . $r . '' . $r2 . ' ' . $r3 . '' . $r4;
             } else {
                 $str = 'номер телефона';
             }

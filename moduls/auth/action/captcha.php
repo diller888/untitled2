@@ -5,7 +5,7 @@ require_once H . 'app/inc/core.php';
 if (!empty($_POST['chislo'])) {
     if (strlen($_POST['chislo']) == 5) {
         $chislo = intval($_POST['chislo']);
-        if ($chislo == $sess->captcha){
+        if ($chislo == $_SESSION['captcha']){
             echo json_encode(array('result' => 'success'));
         } else {
             echo json_encode(array('result' => 'error', 'msg' => 'Не верное число'));

@@ -20,6 +20,5 @@ echo "<a href='/' class='link'><span class='icon-home'></span> home</a>\n";
 echo "<a href='/about' class='link'><span class='icon-tree'></span> about</a>\n";
 echo "</div>\n";
 echo "</div>\n";
-echo '<div class="btn-call">click</div>';
 
 

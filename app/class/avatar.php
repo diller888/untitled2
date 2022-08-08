@@ -12,14 +12,12 @@ function avatar($ID, $class = 'avatar-images')
         "avatar" => 1
     );
     $avatar = $db->select("users__photo", $params);
-    if ($avatar->id) {
-        if (is_file(H . 'uploads/users/' . $ID . '/avatar/' . $avatar->screen)) {
-            return '<img class="' . $class . '" src="/uploads/users/' . $ID . '/avatar/' . $avatar->screen . '" alt="Avatar"  />';
-        } else return '<img class="' . $class . '" src="/uploads/images/no_photo.png" alt="No Avatar" />';
-    } else {
-        return '<img class="' . $class . '" src="/uploads/images/no_photo.png" alt="No Avatar" />';
-    }
+    if ($avatar) {
+
+        if (is_file(H . 'uploads/users/' . $ID . '/photo/' . $avatar->screen)) {
+            return '<div class="' . $class . '"><img src="/uploads/users/' . $ID . '/photo/' . $avatar->screen . '" alt="Avatar"  /></div>';
+        } else return '<div class="' . $class . '"><i class="icon-avatar"></i><span>Нет фото</span></div>';
+
+    } else return '<div class="' . $class . '"><i class="icon-avatar"></i><span>Нет фото</span></div>';
 
 }
-
-?>

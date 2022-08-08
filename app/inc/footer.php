@@ -1,5 +1,6 @@
 <?php
 echo "<div class='loader'><i class='icon-spinner-third'></i><span></span></div>\n";
+echo "<script src='/app/plugins/js/lib/axios/axios.min.js'></script>\n";
 echo "<div class='action'>\n";
 
 if (isset($_GET['cid']) && strlen($_GET['cid']) > 0) {

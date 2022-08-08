@@ -2,9 +2,11 @@
 /**
  * Роутинг Diller Smart CMS
  * Автор Ильдар Русланович
+ * приоритет отдается теме оформления
  */
 //Ajax запрос заголовков для динамической замены
 if (isset($_GET['infoTitle'])) {
+
     $act = isset($_GET['act']) ? trim($_GET['act']) : '';
     switch ($act) {
 
@@ -26,7 +28,6 @@ if (isset($_GET['infoTitle'])) {
                     if (file_exists(TPL . $moduls->link . '/title.php')) {
 
                         include_once TPL . $moduls->link . '/title.php';
-
                         $array['title'] = $title;
 
                         if (isset($_GET['cid']) && strlen($_GET['cid']) > 0) {
@@ -37,9 +38,8 @@ if (isset($_GET['infoTitle'])) {
                             $fileName = 'list_';
                         } elseif (isset($_GET['id']) && strlen($_GET['id']) > 0) {
                             $fileName = 'row_';
-                        } else {
-                            $fileName = '';
-                        }
+                        } else $fileName = '';
+
                         if (file_exists(TPL . $moduls->link . '/js/' . $fileName . 'main.js')) {
                             $array['result'] = 'success';
                             $array['path'] = PATH . $moduls->link . '/js/' . $fileName . 'main.js?d=' . (microtime(true));
@@ -63,9 +63,8 @@ if (isset($_GET['infoTitle'])) {
                             $fileName = 'list_';
                         } elseif (isset($_GET['id']) && strlen($_GET['id']) > 0) {
                             $fileName = 'row_';
-                        } else {
-                            $fileName = '';
-                        }
+                        } else $fileName = '';
+
                         if (file_exists(M . $moduls->link . '/js/' . $fileName . 'main.js')) {
                             $array['result'] = 'success';
                             $array['path'] = '/moduls/' . $moduls->link . '/js/' . $fileName . 'main.js?d=' . (microtime(true));
@@ -90,14 +89,14 @@ if (isset($_GET['infoTitle'])) {
 
                 if (file_exists(TPL . 'main/js/main.js')) {
                     $array['result'] = 'success';
-                    $array['path'] = PATH .'main/js/main.js';
+                    $array['path'] = PATH . 'main/js/main.js';
                 } elseif (file_exists(M . 'main/js/main.js')) {
                     $array['result'] = 'success';
                     $array['path'] = '/moduls/main/js/main.js';
                 }
                 if (user_access('owner') && file_exists(TPL . 'main/js/owner.js')) {
                     $array['result'] = 'success';
-                    $array['owner'] = PATH .'main/js/owner.js';
+                    $array['owner'] = PATH . 'main/js/owner.js';
                 } elseif (user_access('owner') && file_exists(M . 'main/js/owner.js')) {
                     $array['result'] = 'success';
                     $array['owner'] = '/moduls/main/js/owner.js';
@@ -113,23 +112,20 @@ if (isset($_GET['infoTitle'])) {
     if (file_exists(TPL . (isset($_GET['act']) ? $_GET['act'] : 'main') . '/css/main.css')) {
         $loadCss = opendir(TPL . (isset($_GET['act']) ? $_GET['act'] : 'main') . '/css/');
         while ($filecss = readdir($loadCss)) {
-            if (preg_match('#.css$#i', $filecss)) echo "		<link type="text/css" rel="stylesheet" href='" . PATH . (isset($_GET['act']) ? $_GET['act'] : 'main') . "/css/" . $filecss . "'>
-";
+            if (preg_match('#.css$#i', $filecss)) echo "<link type='text/css' rel='stylesheet' href='" . PATH . (isset($_GET['act']) ? $_GET['act'] : 'main') . "/css/" . $filecss . "'>";
         }
     } elseif (file_exists(M . (isset($_GET['act']) ? $_GET['act'] : 'main') . '/css/main.css')) {
         $loadCss = opendir(M . (isset($_GET['act']) ? $_GET['act'] : 'main') . '/css/');
         while ($filecss = readdir($loadCss)) {
-            if (preg_match('#.css$#i', $filecss)) echo "		<link type="text/css" rel="stylesheet" href='/moduls/" . (isset($_GET['act']) ? $_GET['act'] : 'main') . "/css/" . $filecss . "'>
-";
+            if (preg_match('#.css$#i', $filecss)) echo "<link type='text/css' rel='stylesheet' href='/moduls/" . (isset($_GET['act']) ? $_GET['act'] : 'main') . "/css/" . $filecss . "'>";
         }
-    }
+    } else echo "<link type='text/css' rel='stylesheet' href='/moduls/err/css/main.css'>";
 
     $act = isset($_GET['act']) ? trim($_GET['act']) : '';
     switch ($act) {
 
         case 'err':
             $mod_link = 'err/index.php';
-            echo "\t\t<link type=\"text/css\" rel=\"stylesheet\" href='/moduls/err/css/main.css'>\n";
             break;
 
         case 'go':
@@ -142,7 +138,6 @@ if (isset($_GET['infoTitle'])) {
         default;
             if (isset($_GET['act']) && strlen($_GET['act']) > 0) {
 
-                //модули
                 $moduls = $db->selectOne("moduls", "link", $_GET['act']);
 
                 //если есть подключенные модули
@@ -158,9 +153,7 @@ if (isset($_GET['infoTitle'])) {
                                 $mod_link = $moduls->link . '/column.php';
                             } elseif (file_exists(M . $moduls->link . '/column.php')) {
                                 $mod_link = $moduls->link . '/column.php';
-                            } else {
-                                $mod_link = 'err/index.php';
-                            }
+                            } else $mod_link = 'err/index.php';
 
                             //если пришла переменная item (пример адреса site.ru/act/id/item)
                         } elseif (isset($_GET['item']) && strlen($_GET['item']) > 0) {
@@ -169,20 +162,24 @@ if (isset($_GET['infoTitle'])) {
                                 $mod_link = $moduls->link . '/item.php';
                             } elseif (file_exists(M . $moduls->link . '/item.php')) {
                                 $mod_link = $moduls->link . '/item.php';
-                            } else {
-                                $mod_link = 'err/index.php';
-                            }
+                            } else $mod_link = 'err/index.php';
 
-                        } else {
+                        } elseif (isset($_GET['list']) && strlen($_GET['list']) > 0) {
 
-                            //проверяем есть ли в папке файл модуля, если нет подгрузим стандартный модуль из папки media
                             if (file_exists(TPL . $moduls->link . '/list.php')) {
                                 $mod_link = $moduls->link . '/list.php';
                             } elseif (file_exists(M . $moduls->link . '/list.php')) {
                                 $mod_link = $moduls->link . '/list.php';
-                            } else {
-                                $mod_link = 'err/index.php';
-                            }
+                            } else $mod_link = 'err/index.php';
+
+                        } else {
+
+                            //проверяем есть ли в папке файл модуля, если нет подгрузим стандартный модуль из папки media
+                            if (file_exists(TPL . $moduls->link . '/row.php')) {
+                                $mod_link = $moduls->link . '/row.php';
+                            } elseif (file_exists(M . $moduls->link . '/row.php')) {
+                                $mod_link = $moduls->link . '/row.php';
+                            } else $mod_link = 'err/index.php';
 
                         }
 
@@ -193,21 +190,13 @@ if (isset($_GET['infoTitle'])) {
                             $mod_link = $moduls->link . '/index.php';
                         } elseif (file_exists(M . $moduls->link . '/index.php')) {
                             $mod_link = $moduls->link . '/index.php';
-                        } else {
-                            echo "\t\t<link type=\"text/css\" rel=\"stylesheet\" href='/moduls/err/css/main.css'>\n";
-                            $mod_link = 'err/index.php';
-                        }
+                        } else $mod_link = 'err/index.php';
 
                     }
 
-                } else {
-                    echo "\t\t<link type=\"text/css\" rel=\"stylesheet\" href='/moduls/err/css/main.css'>\n";
-                    $mod_link = 'err/index.php';
-                }
+                } else $mod_link = 'err/index.php';
 
-            } else {
-                $mod_link = 'main/index.php';
-            }
+            } else $mod_link = 'main/index.php';
 
     }
 
@@ -221,10 +210,7 @@ if (isset($_GET['infoTitle'])) {
             require_once TPL . $_GET['act'] . '/index.php';
         } elseif (file_exists(M . $_GET['act'] . '/index.php')) {
             require_once M . $_GET['act'] . '/index.php';
-        } else {
-            echo "\t\t<link type=\"text/css\" rel=\"stylesheet\" href='/moduls/err/css/main.css'>\n";
-            require_once M . 'err/index.php';
-        }
+        } else require_once M . 'err/index.php';
 
     } catch (Exception $e) {
 

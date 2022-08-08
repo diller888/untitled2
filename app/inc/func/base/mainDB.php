@@ -18,11 +18,11 @@ class mainDB
         return self::$db;
     }
 
-    public function __construct($host = null, $username = null, $password = null, $dbname = null)
+    public function __construct($host = null, $username = null, $password = null, $dbname = null, $locale = 'ru_RU', $charset = 'utf8')
     {
         $this->mysqli = new mysqli($host, $username, $password, $dbname);
-        $this->mysqli->query("SET lc_time_names = 'ru_RU'");
-        $this->mysqli->query("SET NAMES 'utf8'");
+        $this->mysqli->query("SET lc_time_names = $locale");
+        $this->mysqli->query("SET NAMES $charset");
     }
 
     public function select($table, $params)
@@ -57,7 +57,7 @@ class mainDB
         }
         $query = "SELECT `id` FROM `" . $table . "` " . $where;
         $result = mysqli_num_rows($this->mysqli->query($query));
-        if (!$result) return false;
+        if (!$result) return 0;
         return (int)$result;
     }
 
@@ -112,9 +112,11 @@ class mainDB
                 $count = count($params);
                 $num = 0;
                 foreach ($params as $item => $rows) {
-                    $num++;
-                    $key .= "`" . $item . "`" . ($num < $count ? ', ' : null);
-                    $value .= "'" . $rows . "'" . ($num < $count ? ', ' : null);
+                    if (strlen($rows)>0) {
+                        $num++;
+                        $key .= "`" . $item . "`" . ($num < $count ? ', ' : null);
+                        $value .= "'" . $rows . "'" . ($num < $count ? ', ' : null);
+                    }
                 }
                 $query = "INSERT INTO `" . $table . "` (" . $key . ") VALUES (" . $value . ")";
                 $result = $this->mysqli->query($query);
